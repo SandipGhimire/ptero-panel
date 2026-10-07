@@ -3,6 +3,7 @@ import { Layers, LogOut, UserCog } from 'lucide-react';
 import { useCurrentUser } from '@/api/account/queries';
 import { useSiteSettings } from '@/api/settings/queries';
 import { useLogout } from '@/api/auth/queries';
+import { useTranslation } from 'react-i18next';
 import SearchContainer from '@/components/dashboard/search/SearchContainer';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import Tooltip from '@/components/elements/tooltip/Tooltip';
@@ -21,6 +22,7 @@ const navItemClass = [
 ].join(' ');
 
 export default function NavigationBar() {
+    const { t } = useTranslation();
     const name = useSiteSettings().name;
     const rootAdmin = useCurrentUser().rootAdmin;
     const logout = useLogout();
@@ -44,35 +46,35 @@ export default function NavigationBar() {
                 <div className={'flex h-full shrink-0 items-center justify-center'}>
                     <Slot name={'nav.items.before'} />
                     <SearchContainer className={navItemClass} />
-                    <Tooltip placement={'bottom'} content={'Dashboard'}>
+                    <Tooltip placement={'bottom'} content={t('home') || 'Dashboard'}>
                         <Link
                             to={'/'}
                             activeOptions={{ exact: true, includeSearch: false }}
                             className={navItemClass}
-                            aria-label={'Dashboard'}
+                            aria-label={t('home') || 'Dashboard'}
                         >
                             <Icon icon={Layers} />
                         </Link>
                     </Tooltip>
                     {rootAdmin && (
-                        <Tooltip placement={'bottom'} content={'Admin'}>
-                            <Link to={'/panel'} className={navItemClass} aria-label={'Admin'}>
+                        <Tooltip placement={'bottom'} content={t('admin') || 'Admin'}>
+                            <Link to={'/panel'} className={navItemClass} aria-label={t('admin') || 'Admin'}>
                                 <Icon icon={UserCog} />
                             </Link>
                         </Tooltip>
                     )}
                     <LanguageSelector className={navItemClass} />
-                    <Tooltip placement={'bottom'} content={'Account Settings'}>
-                        <Link to={'/account'} className={navItemClass} aria-label={'Account Settings'}>
+                    <Tooltip placement={'bottom'} content={t('account') || 'Account Settings'}>
+                        <Link to={'/account'} className={navItemClass} aria-label={t('account') || 'Account Settings'}>
                             <span className={'flex items-center w-5 h-5'}>
                                 <Avatar.User />
                             </span>
                         </Link>
                     </Tooltip>
-                    <Tooltip placement={'bottom'} content={'Sign Out'}>
+                    <Tooltip placement={'bottom'} content={t('sign_out') || 'Sign Out'}>
                         <button
                             type={'button'}
-                            aria-label={'Sign Out'}
+                            aria-label={t('sign_out') || 'Sign Out'}
                             onClick={onTriggerLogout}
                             className={navItemClass}
                         >

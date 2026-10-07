@@ -62,6 +62,8 @@ i18n.use(I18NextMultiloadBackendAdapter)
         debug: import.meta.env.DEV,
         lng: initialLanguage(),
         fallbackLng: 'en',
+        defaultNS: 'strings',
+        ns: ['strings'],
         keySeparator: '.',
         backend: {
             backend: I18NextHttpBackend,

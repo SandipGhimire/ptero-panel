@@ -10,15 +10,20 @@ import { useLocation } from '@tanstack/react-router';
 import AccountOverviewCardGrid from '@/components/dashboard/AccountOverviewCardGrid';
 import Slot from '@/extensions/Slot';
 import PageHeading from '@/components/elements/PageHeading';
+import { useTranslation } from 'react-i18next';
 
 const CARD_WIDTH = 'w-full sm:w-[calc(50%_-_1rem)] md:w-auto md:flex-1';
 
 export default function AccountOverviewContainer() {
+    const { t } = useTranslation();
     const state = useLocation().state as { twoFactorRedirect?: boolean } | null;
 
     return (
-        <PageContentBlock title={'Account Overview'}>
-            <PageHeading title={'Account'} description={'Manage your profile, credentials, and account security.'} />
+        <PageContentBlock title={t('account') || 'Account Overview'}>
+            <PageHeading
+                title={t('account') || 'Account'}
+                description={'Manage your profile, credentials, and account security.'}
+            />
             {state?.twoFactorRedirect && (
                 <Alert title={'2-Factor Required'} type={'danger'}>
                     Your account must have two-factor authentication enabled in order to continue.

@@ -17,7 +17,10 @@ import Slot from '@/extensions/Slot';
 import PageHeading from '@/components/elements/PageHeading';
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 
+import { useTranslation } from 'react-i18next';
+
 function DashboardContainerContent() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { page, type } = useDashboardSearch();
 
@@ -62,9 +65,9 @@ function DashboardContainerContent() {
     }
 
     return (
-        <PageContentBlock title={'Dashboard'}>
+        <PageContentBlock title={t('home') || 'Dashboard'}>
             <PageHeading
-                title={'Servers'}
+                title={t('servers') || 'Servers'}
                 className={'mb-4'}
                 actions={
                     rootAdmin && (

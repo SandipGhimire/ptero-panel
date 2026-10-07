@@ -1,10 +1,12 @@
 import React from 'react';
 import { useStore } from '@tanstack/react-form';
 import { useAppForm, Form } from '@/components/form';
+import { useTranslation } from 'react-i18next';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import { useLanguage } from '@/hooks/useLanguage';
 
 export default function UpdateLanguageForm() {
+    const { t } = useTranslation();
     const { currentLanguage, languages, changeLanguage, isUpdating } = useLanguage();
 
     const form = useAppForm({
@@ -37,7 +39,7 @@ export default function UpdateLanguageForm() {
                 </form.AppField>
                 <div className={'mt-6'}>
                     <form.AppForm>
-                        <form.SubmitButton disabled={isUpdating}>Save Language</form.SubmitButton>
+                        <form.SubmitButton disabled={isUpdating}>{t('save') || 'Save Language'}</form.SubmitButton>
                     </form.AppForm>
                 </div>
             </Form>
