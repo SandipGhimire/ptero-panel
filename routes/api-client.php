@@ -11,6 +11,7 @@ use Pterodactyl\Http\Controllers\Api\Client\ActivityLogFilterController;
 use Pterodactyl\Http\Controllers\Api\Client\ApiKeyController;
 use Pterodactyl\Http\Controllers\Api\Client\ClientController;
 use Pterodactyl\Http\Controllers\Api\Client\ExtensionProgressController;
+use Pterodactyl\Http\Controllers\Api\Client\LanguagesController;
 use Pterodactyl\Http\Controllers\Api\Client\Servers\BackupController;
 use Pterodactyl\Http\Controllers\Api\Client\Servers\CommandController;
 use Pterodactyl\Http\Controllers\Api\Client\Servers\DatabaseController;
@@ -45,6 +46,7 @@ use Pterodactyl\Http\Middleware\RequireTwoFactorAuthentication;
 */
 Route::get('/', [ClientController::class, 'index'])->name('api:client.index');
 Route::get('/permissions', [ClientController::class, 'permissions']);
+Route::get('/languages', LanguagesController::class)->name('api:client.languages');
 Route::get('/extension-progress/{extension}/{job}', [ExtensionProgressController::class, 'user'])->where('extension', '[a-z][a-z0-9-]{0,47}')->whereUuid('job')->name('api:client.extension-progress');
 
 Route::prefix('/account')->middleware(AccountSubject::class)->group(function (): void {
@@ -59,6 +61,7 @@ Route::prefix('/account')->middleware(AccountSubject::class)->group(function ():
         ->middleware('throttle')
         ->name('api:client.account.update-email');
     Route::put('/password', [AccountController::class, 'updatePassword'])->name('api:client.account.update-password');
+    Route::put('/language', [AccountController::class, 'updateLanguage'])->name('api:client.account.update-language');
 
     Route::get('/activity', ActivityLogController::class)->name('api:client.account.activity');
     Route::get('/activity/filters', ActivityLogFilterController::class)->name('api:client.account.activity.filters');

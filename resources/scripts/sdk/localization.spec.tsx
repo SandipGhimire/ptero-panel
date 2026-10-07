@@ -29,3 +29,20 @@ it('uses the mount namespace and host locale without reading another extension t
     expect(result.current.locale).toBe('en');
     expect(result.current.t('greeting', { name: 'Alex' })).toBe('Hello Alex');
 });
+
+it('registers in-memory extension translation bundles natively', async () => {
+    const { registerExtensionTranslations } = await import('./localization');
+    const { default: i18n } = await import('@/i18n');
+
+    registerExtensionTranslations({
+        extensionId: 'custom-plugin',
+        group: 'common',
+        resources: {
+            en: { status: 'Online' },
+            de: { status: 'Online (DE)' },
+        },
+    });
+
+    expect(i18n.getResource('en', 'ext-custom-plugin::common', 'status')).toBe('Online');
+    expect(i18n.getResource('de', 'ext-custom-plugin::common', 'status')).toBe('Online (DE)');
+});

@@ -17,7 +17,8 @@ interface ExtendedWindow extends Window {
 }
 
 export const getBootstrapUser = (): UserData | undefined => {
-    const user = (window as ExtendedWindow).PterodactylUser;
+    const win = (globalThis as typeof globalThis & { window?: ExtendedWindow }).window;
+    const user = win?.PterodactylUser;
 
     return user
         ? {
@@ -41,7 +42,8 @@ export const endBootstrapSession = (): void => {
 
 export const hasBootstrapSession = (): boolean => !sessionEnded && !!getBootstrapUser()?.uuid;
 
-export const getBootstrapSiteSettings = (): SiteSettings | undefined => (window as ExtendedWindow).SiteConfiguration;
+export const getBootstrapSiteSettings = (): SiteSettings | undefined =>
+    (globalThis as typeof globalThis & { window?: ExtendedWindow }).window?.SiteConfiguration;
 
 export const getBootstrapExtensions = (): SiteExtensionEntry[] =>
-    (window as ExtendedWindow).SiteConfiguration?.extensions ?? [];
+    (globalThis as typeof globalThis & { window?: ExtendedWindow }).window?.SiteConfiguration?.extensions ?? [];

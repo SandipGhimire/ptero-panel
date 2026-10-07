@@ -8,6 +8,7 @@ import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import Tooltip from '@/components/elements/tooltip/Tooltip';
 import Avatar from '@/components/Avatar';
 import Icon from '@/components/elements/Icon';
+import LanguageSelector from '@/components/LanguageSelector';
 import Slot from '@/extensions/Slot';
 import { interactiveSurfaceClass } from '@/components/ui/styles';
 
@@ -60,6 +61,7 @@ export default function NavigationBar() {
                             </Link>
                         </Tooltip>
                     )}
+                    <LanguageSelector className={navItemClass} />
                     <Tooltip placement={'bottom'} content={'Account Settings'}>
                         <Link to={'/account'} className={navItemClass} aria-label={'Account Settings'}>
                             <span className={'flex items-center w-5 h-5'}>

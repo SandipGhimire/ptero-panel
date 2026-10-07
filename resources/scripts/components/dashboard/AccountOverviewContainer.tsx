@@ -2,6 +2,7 @@ import ContentBox from '@/components/elements/ContentBox';
 import UpdatePasswordForm from '@/components/dashboard/forms/UpdatePasswordForm';
 import UpdateEmailAddressForm from '@/components/dashboard/forms/UpdateEmailAddressForm';
 import ConfigureTwoFactorForm from '@/components/dashboard/forms/ConfigureTwoFactorForm';
+import UpdateLanguageForm from '@/components/dashboard/forms/UpdateLanguageForm';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import { cn } from '@/lib/cn';
 import { Alert } from '@/components/elements/alert';
@@ -34,6 +35,11 @@ export default function AccountOverviewContainer() {
                 </ContentBox>
                 <ContentBox className={cn(CARD_WIDTH, 'md:ml-8 mt-8 md:mt-0')} title={'Two-Step Verification'}>
                     <ConfigureTwoFactorForm />
+                </ContentBox>
+            </AccountOverviewCardGrid>
+            <AccountOverviewCardGrid className={'mb-10'}>
+                <ContentBox className={CARD_WIDTH} title={'Language Preference'}>
+                    <UpdateLanguageForm />
                 </ContentBox>
             </AccountOverviewCardGrid>
             <Slot name={'account.overview.after'} />

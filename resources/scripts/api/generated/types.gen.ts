@@ -5141,6 +5141,37 @@ export type AdminListLanguagesData = {
     url: '/api/admin/languages';
 };
 
+export type ClientListLanguagesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/client/languages';
+};
+
+export type ClientListLanguagesResponses = {
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type ClientListLanguagesResponse = ClientListLanguagesResponses[keyof ClientListLanguagesResponses];
+
+export type ClientUpdateAccountLanguageData = {
+    body: {
+        language: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/client/account/language';
+};
+
+export type ClientUpdateAccountLanguageResponses = {
+    204: void;
+};
+
+export type ClientUpdateAccountLanguageResponse = ClientUpdateAccountLanguageResponses[keyof ClientUpdateAccountLanguageResponses];
+export type ClientUpdateAccountLanguageError = ErrorEnvelope;
+
 export type AdminListLanguagesErrors = {
     /**
      * Authentication credentials were missing or invalid.

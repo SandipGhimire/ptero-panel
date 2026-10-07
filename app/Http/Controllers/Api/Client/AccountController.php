@@ -18,6 +18,7 @@ use Pterodactyl\Extensions\Scribe\Attributes\ResponseFromTransformer;
 use Pterodactyl\Facades\Activity;
 use Pterodactyl\Facades\Fractal;
 use Pterodactyl\Http\Requests\Api\Client\Account\UpdateEmailRequest;
+use Pterodactyl\Http\Requests\Api\Client\Account\UpdateLanguageRequest;
 use Pterodactyl\Http\Requests\Api\Client\Account\UpdatePasswordRequest;
 use Pterodactyl\Models\User;
 use Pterodactyl\Support\JsonValueGuard;
@@ -101,6 +102,31 @@ class AccountController extends ClientApiController
         $user = $passwords->update($request->user(), $password);
 
         Activity::event('user:account.password-changed')->subject($user)->log();
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Update the authenticated user's preferred language.
+     */
+    #[Endpoint('Update account language', "Updates the authenticated user's preferred language.")]
+    #[BodyParam('language', 'string', 'The ISO/locale code of the chosen language.', required: true, example: 'en')]
+    #[ScribeResponse(status: 204, description: 'Language preference updated.')]
+    public function updateLanguage(UpdateLanguageRequest $request): JsonResponse
+    {
+        $language = JsonValueGuard::string($request->validated('language'));
+        $user = $request->user();
+
+        $original = $user->language;
+        $user->language = $language;
+        $user->save();
+
+        if ($original !== $language) {
+            Activity::event('user:account.language-changed')
+                ->property(['old' => $original, 'new' => $language])
+                ->subject($user)
+                ->log();
+        }
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }

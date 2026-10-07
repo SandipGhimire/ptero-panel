@@ -4,5 +4,28 @@ export interface ExtensionTranslation {
     ready: boolean;
     t(key: string, values?: Record<string, string | number>): string;
 }
-/** resources/lang/<locale>/<group>.php, registered with loadExtensionTranslations(). */
+export type ExtensionResourceBundle = Record<string, Record<string, string>>;
+export interface RegisterExtensionTranslationsOptions {
+    extensionId: string;
+    group?: string;
+    resources: ExtensionResourceBundle;
+}
+/**
+ * Register translation bundles client-side for an extension.
+ * This allows extensions to provide native translations directly in code
+ * without requiring network fetches to the backend for translation dictionaries.
+ *
+ * Example:
+ * ```ts
+ * registerExtensionTranslations({
+ *     extensionId: 'my-plugin',
+ *     resources: {
+ *         en: { 'welcome': 'Welcome to my plugin!' },
+ *         de: { 'welcome': 'Willkommen in meinem Plugin!' },
+ *     }
+ * });
+ * ```
+ */
+export declare function registerExtensionTranslations({ extensionId, group, resources, }: RegisterExtensionTranslationsOptions): void;
+/** resources/lang/<locale>/<group>.php, registered with loadExtensionTranslations() or registerExtensionTranslations(). */
 export declare function useExtensionTranslation(group?: string): ExtensionTranslation;
