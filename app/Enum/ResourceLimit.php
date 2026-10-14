@@ -31,6 +31,10 @@ enum ResourceLimit
     {
         foreach (self::cases() as $case) {
             RateLimiter::for($case->throttleKey(), function (Request $request) use ($case) {
+                if (app()->environment('development', 'local')) {
+                    return Limit::none();
+                }
+
                 $route = $request->route();
                 throw_if($route === null, InvalidArgumentException::class, 'Expected an active route when applying a server resource limit.');
 

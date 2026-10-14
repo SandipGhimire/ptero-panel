@@ -63,9 +63,9 @@ final class InitiateBackup implements InitiatesBackups
         Validator::validate(['name' => $name, 'is_locked' => $this->isLocked, 'ignored_files' => $this->ignoredFiles], self::rules());
 
         [$backup, $rotated] = DB::transaction(/** @return array{Backup, Collection<int, Backup>} */ function () use ($server, $name, $override): array {
-            $limit = config('backups.throttles.limit');
-            $period = config('backups.throttles.period');
-            if ($period > 0) {
+            $limit = JsonValueGuard::integer(config('backups.throttles.limit'));
+            $period = JsonValueGuard::integer(config('backups.throttles.period'));
+            if ($period > 0 && ! app()->environment('development', 'local')) {
                 $previousCount = $server->backups()
                     ->withTrashed()
                     ->nonFailed()

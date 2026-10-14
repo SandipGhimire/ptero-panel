@@ -194,6 +194,10 @@ class AppServiceProvider extends ServiceProvider
 
     private function apiLimit(Request $request, string $name): Limit
     {
+        if (app()->environment('development', 'local')) {
+            return Limit::none();
+        }
+
         $user = $request->user();
         $key = $user instanceof User ? $user->uuid : $request->ip();
 
